@@ -135,16 +135,16 @@ const TITLE_EN = "Changes in Maximal Oxygen Uptake and Functional Movement Follo
 const ABS_KO = [
   ["목적", "이 연구는 12주간의 고강도 기능성 인터벌 트레이닝(H-IFIT)에 따른 대학 태권도 겨루기 선수의 최대산소섭취량(VO~2~max)과 기능적 움직임의 변화를 규명하는 데 목적이 있다."],
   ["방법", "대학 태권도 겨루기 선수 25명을 실험군(*n* = 13)과 통제군(*n* = 12)으로 나누어, 실험군은 12주간 주 3회, 회당 60분의 H-IFIT를 실시하고 통제군은 정규훈련을 실시하였다. VO~2~max는 트레드밀 점증부하검사로, 기능적 움직임은 기능적 움직임 검사(FMS)로 측정하였으며, 반복측정 분산분석과 대응표본 *t*검정으로 분석하였다."],
-  ["결과", "실험군의 VO~2~max는 48.31±4.12에서 52.38±4.05 mL/kg/min으로, FMS 총점은 14.92±1.44점에서 17.08±1.32점으로 증가하였고, 두 변인 모두 집단과 시기 간 상호작용이 유의하였다(*p* < .001). 통제군은 유의한 변화가 없었다. FMS 하위항목 중 Deep Squat, Hurdle Step, In-line Lunge, Rotary Stability가 향상되었다."],
-  ["결론", "H-IFIT는 대학 태권도 겨루기 선수의 유산소성 체력과 기본 움직임 수행을 함께 향상시키는 훈련 방법으로 활용될 수 있다."],
+  ["결과", "실험군의 VO~2~max는 【사전 M±SD】에서 【사후 M±SD】 mL/kg/min으로, FMS 총점은 【사전 M±SD】점에서 【사후 M±SD】점으로 【변화 방향】하였다. 집단과 시기 간 상호작용은 VO~2~max에서 【유의/비유의(*p*)】, FMS 총점에서 【유의/비유의(*p*)】하였으며, 통제군은 【결과】. FMS 하위항목에서는 【유의한 변화를 보인 항목】."],
+  ["결론", "【재분석 결과에 맞춰 기재. 예: H-IFIT는 대학 태권도 겨루기 선수의 유산소성 체력과 기본 움직임 수행을 향상시키는 훈련 방법으로 활용될 수 있다.】"],
 ];
 const KW_KO = "고강도 기능성 인터벌 트레이닝, 태권도 겨루기, 최대산소섭취량, 기능적 움직임 검사, 대학 선수";
 
 const ABS_EN = [
   ["Purpose", "This study examined changes in maximal oxygen uptake (VO~2~max) and functional movement following 12 weeks of high-intensity functional interval training (H-IFIT) in collegiate taekwondo sparring athletes."],
   ["Methods", "Twenty-five collegiate taekwondo sparring athletes were assigned to an experimental group (*n* = 13) or a control group (*n* = 12). The experimental group performed H-IFIT three times per week, 60 minutes per session, for 12 weeks, whereas the control group continued regular training. VO~2~max was measured with a graded treadmill exercise test, and functional movement was assessed with the Functional Movement Screen (FMS). Data were analyzed with two-way repeated-measures ANOVA and paired *t*-tests."],
-  ["Results", "In the experimental group, VO~2~max increased from 48.31 ± 4.12 to 52.38 ± 4.05 mL/kg/min, and the FMS composite score increased from 14.92 ± 1.44 to 17.08 ± 1.32 points. Significant group × time interactions were found for both variables (*p* < .001), whereas the control group showed no significant changes. Among the FMS subtests, Deep Squat, Hurdle Step, In-line Lunge, and Rotary Stability improved in the experimental group."],
-  ["Conclusion", "H-IFIT may be used as a training method to improve both aerobic fitness and fundamental movement patterns in collegiate taekwondo sparring athletes."],
+  ["Results", "In the experimental group, VO~2~max changed from 【pre M ± SD】 to 【post M ± SD】 mL/kg/min, and the FMS composite score changed from 【pre M ± SD】 to 【post M ± SD】 points. The group × time interaction was 【significant/non-significant】 for VO~2~max (【F, p】) and 【significant/non-significant】 for the FMS composite score (【F, p】). The control group 【results】. Among the FMS subtests, 【subtests with significant changes】."],
+  ["Conclusion", "【Write according to the re-analysis, e.g., H-IFIT may be used as a training method to improve aerobic fitness and fundamental movement patterns in collegiate taekwondo sparring athletes.】"],
 ];
 const KW_EN = "high-intensity functional interval training, taekwondo sparring, maximal oxygen uptake, Functional Movement Screen, collegiate athletes";
 
@@ -168,22 +168,22 @@ const M3a = "VO~2~max는 트레드밀(【제조사, 모델, 국가】)과 호흡
 const M3b = "FMS는 Cook 등(2014a, 2014b)이 제시한 절차에 따라 Deep Squat, Hurdle Step, In-line Lunge, Shoulder Mobility, Active Straight Leg Raise, Trunk Stability Push-up, Rotary Stability의 7개 항목으로 평가하였다. 각 항목은 0–3점으로 채점하였고, 좌우를 평가하는 항목은 낮은 쪽 점수를 항목 점수로 하였으며, 어깨 충돌·척추 신전·척추 굴곡 배제 검사(clearing test)에서 통증이 나타나면 해당 항목을 0점으로 처리하였다. 총점은 7개 항목의 합(0–21점)으로 산출하였다. 평가는 【FMS 자격을 갖춘 평가자 n명】이 【집단 배정을 모르는 상태에서】 실시하였으며, 각 항목은 【3회 시도 중 최고 점수】를 기록하였다【평가자 간 신뢰도(ICC 또는 kappa) 기재】.";
 const M4 = "자료는 SPSS 25.0(IBM Corp., Armonk, NY, USA)을 이용하여 분석하였으며, 모든 측정값은 평균과 표준편차로 제시하였다. 집단과 측정 시기에 따른 VO~2~max와 FMS 총점의 변화는 2(집단)×2(시기) 반복측정 분산분석으로 분석하였고, 집단별 사전·사후 차이는 대응표본 *t*검정으로 확인하였다. 효과크기는 부분 에타제곱(η~p~^2^)으로 제시하였다(Lakens, 2013). FMS 하위항목은 【검정 방법: 예) Wilcoxon 부호순위검정, 다중비교 보정 방법】으로 분석하였다. 통계적 유의수준은 α = .05로 설정하였다.";
 
-const R1 = "VO~2~max의 변화는 <표 3>과 같다. 실험군의 VO~2~max는 사전 48.31±4.12 mL/kg/min에서 사후 52.38±4.05 mL/kg/min으로 4.07 mL/kg/min(8.4%) 증가하였으며, 이 변화는 통계적으로 유의하였다(*t* = −6.184, *p* < .001). 통제군은 사전 【M±SD】에서 사후 【M±SD】 mL/kg/min으로 유의한 변화가 나타나지 않았다(*t* = −1.207, *p* = .253). 집단과 시기 간 상호작용 효과는 유의하였다(*F*(1, 【23】) = 18.742, *p* < .001, η~p~^2^ = 【.449】).";
-const R2 = "FMS 총점의 변화는 <표 3>과 같다. 실험군의 FMS 총점은 사전 14.92±1.44점에서 사후 17.08±1.32점으로 유의하게 증가하였으며(*t* = −7.368, *p* < .001), 통제군은 사전 【M±SD】점에서 사후 【M±SD】점으로 유의한 변화가 없었다(*t* = −1.483, *p* = .166). 집단과 시기 간 상호작용 효과도 유의하였다(*F*(1, 【23】) = 21.396, *p* < .001, η~p~^2^ = 【.482】). 【저자 확인: 실험군 FMS 평균(14.92, 17.08)과 *t*값(−7.368)은 13명의 정수 총점에서 동시에 성립하지 않으므로 원자료로 재산출한 뒤 확정】";
-const R3 = "FMS 하위항목의 변화는 <표 4>와 같다. 실험군에서는 Deep Squat, Hurdle Step, In-line Lunge, Rotary Stability 점수가 유의하게 향상되었으며(*p* < .05), Shoulder Mobility, Active Straight Leg Raise, Trunk Stability Push-up은 유의한 변화가 없었다. 【통제군 하위항목 결과 기재】";
+const R1 = "VO~2~max의 변화는 <표 3>과 같다. 실험군의 VO~2~max는 사전 【M±SD】 mL/kg/min에서 사후 【M±SD】 mL/kg/min으로 【변화량】 mL/kg/min(【변화율】%) 【증가/감소】하였으며(*t* = 【 】, *p* 【 】), 통제군은 사전 【M±SD】 mL/kg/min에서 사후 【M±SD】 mL/kg/min으로 【변화 기술】(*t* = 【 】, *p* 【 】). 집단과 시기 간 상호작용 효과는 【유의하였다/유의하지 않았다】(*F*(1, 【df】) = 【 】, *p* 【 】, η~p~^2^ = 【 】).";
+const R2 = "FMS 총점의 변화는 <표 3>과 같다. 실험군의 FMS 총점은 사전 【M±SD】점에서 사후 【M±SD】점으로 【변화량】점 【증가/감소】하였으며(*t* = 【 】, *p* 【 】), 통제군은 사전 【M±SD】점에서 사후 【M±SD】점으로 【변화 기술】(*t* = 【 】, *p* 【 】). 집단과 시기 간 상호작용 효과는 【유의하였다/유의하지 않았다】(*F*(1, 【df】) = 【 】, *p* 【 】, η~p~^2^ = 【 】).";
+const R3 = "FMS 하위항목의 변화는 <표 4>와 같다. 실험군에서는 【유의하게 변화한 항목과 검정값】, 통제군에서는 【결과 기재】.";
 
 const DISC = [
-  "이 연구는 12주간의 H-IFIT에 따른 대학 태권도 겨루기 선수의 VO~2~max와 기능적 움직임의 변화를 정규훈련 집단과 비교하였다. 그 결과 실험군에서 VO~2~max와 FMS 총점이 유의하게 증가하였고, 두 변인 모두 집단과 시기 간 상호작용이 유의하여 정규훈련 집단과 다른 변화 양상을 보였다.",
-  "실험군의 VO~2~max는 4.07 mL/kg/min(8.4%) 증가하였다. 실험군의 사전 VO~2~max(48.31 mL/kg/min)는 태권도 선수에서 보고된 범위 안에 있었으며(Bridge et al., 2014), 이미 훈련된 선수에서도 12주간의 고강도 인터벌 자극이 추가적인 유산소성 체력 향상을 가져올 수 있음을 보여준다. 이러한 결과는 인터벌 훈련이 VO~2~max 향상에 효과적이라는 메타분석 결과(Milanović et al., 2015) 및 태권도 선수에게 인터벌 훈련을 적용한 선행연구(Monks et al., 2017; Song & Sheykhlouvand, 2024)와 같은 방향이다. 다만 선행연구는 4–6주간의 달리기 또는 기술 기반 인터벌을 적용하였으므로, 운동 형태와 기간, 비교 조건이 다른 이 연구와 효과의 크기를 직접 비교하기는 어렵다.",
+  "이 연구는 12주간의 H-IFIT에 따른 대학 태권도 겨루기 선수의 VO~2~max와 기능적 움직임의 변화를 정규훈련 집단과 비교하였다. 그 결과 【재분석 결과 요약: 예) 실험군에서 VO~2~max와 FMS 총점이 유의하게 증가하였고, 두 변인 모두 집단과 시기 간 상호작용이 유의하였다】.",
+  "실험군의 VO~2~max는 【변화량】 mL/kg/min(【변화율】%) 【증가/감소】하였다. 실험군의 사전 VO~2~max(【 】 mL/kg/min)는 태권도 선수에서 보고된 값과 비교할 때 【 】 수준이었다(Bridge et al., 2014). 인터벌 훈련은 VO~2~max 향상에 효과적인 방법으로 보고되었으며(Milanović et al., 2015), 태권도 선수에게 인터벌 훈련을 적용한 선행연구에서도 유산소성 체력의 향상이 보고되었다(Monks et al., 2017; Song & Sheykhlouvand, 2024). 이 연구의 결과는 이러한 선행연구와 【같은/다른】 방향이다. 다만 선행연구는 4–6주간의 달리기 또는 기술 기반 인터벌을 적용하였으므로, 운동 형태와 기간, 비교 조건이 다른 이 연구와 효과의 크기를 직접 비교하기는 어렵다.",
   "H-IFIT는 전신 동작을 짧은 휴식과 함께 반복하는 구조로, 운동 중 심박수를 높은 수준으로 유지하게 하여 심폐계에 반복적인 고강도 자극을 준다. 이러한 자극은 일회박출량 증가와 같은 중추적 적응과 골격근의 산소 이용 능력 향상과 같은 말초적 적응을 통해 VO~2~max를 높일 수 있으나, 이 연구에서는 이러한 생리적 변인을 직접 측정하지 않았으므로 기전은 추후 검증이 필요하다. 또한 이 연구의 VO~2~max는 체중당 상대값이므로 체중 변화도 결과에 영향을 줄 수 있다【사전·사후 체중 및 절대 VO~2~max 결과 기재】. 한편 실험군은 【정규훈련에 H-IFIT를 추가로 수행하였으므로】 실험군의 변화에는 프로그램 구성뿐 아니라 총 훈련량의 차이가 함께 작용했을 수 있으며, 이 결과는 정규훈련에 H-IFIT를 【추가】하였을 때의 효과로 해석하는 것이 적절하다.",
-  "실험군의 FMS 총점은 2.16점 증가하였다. 사전 총점(14.92점)은 대학 선수의 평균 수준(14.8점)과 비슷하였으며(Pollen et al., 2021), 사후 총점은 17점 이상으로 향상되었다. 선수 대상 운동중재 연구를 종합한 메타분석에서 기능성 훈련은 1.74점, 코어 안정성 훈련은 2.89점의 FMS 총점 향상을 보였는데(Maleki et al., 2025), 이 연구의 변화량은 이 범위 안에 있다. 태권도 전공자에게 12주간 HIIT를 적용한 김현륜과 이상일(2026)도 FMS의 향상을 보고하였다. 다만 FMS 총점의 최소탐지변화량은 평가자 간 2.1점, 평가자 내 2.5점으로 보고되어(Teyhen et al., 2012) 집단 평균의 변화량과 비슷한 수준이므로, 개별 선수의 변화를 해석할 때에는 측정오차를 함께 고려해야 한다.",
-  "하위항목에서는 Deep Squat, Hurdle Step, In-line Lunge, Rotary Stability가 향상되었다. 이 항목들은 하지의 가동성과 안정성, 한 발 지지 상태의 균형, 몸통의 다면적 안정성을 요구하는 동작으로, H-IFIT에 포함된 스쿼트 점프, 점핑 런지, 스텝업, 플랭크, 밴드 회전 등과 동작 특성이 비슷하다. 반면 Shoulder Mobility와 Active Straight Leg Raise는 어깨와 햄스트링의 유연성에 크게 좌우되는 항목으로, 프로그램에 이를 직접 겨냥한 운동이 포함되지 않아 변화가 나타나지 않았을 가능성이 있다. Trunk Stability Push-up의 결과는 【사전 점수 분포와 천장효과를 확인한 뒤 해석 기재】. 김현륜과 이상일(2026)은 7개 하위항목 모두에서 유의한 변화를 보고하여 이 연구와 차이가 있었는데, 이는 프로그램 구성과 대상자 특성의 차이를 반영할 수 있다. 따라서 겨루기 선수의 움직임 향상을 목표로 할 때에는 H-IFIT에 어깨와 고관절의 가동성 운동을 보완적으로 포함하는 것을 고려할 수 있다.",
-  "FMS 총점 14점 이하가 부상 위험 증가와 관련된다는 보고가 있으나(Kiesel et al., 2007), 체계적 문헌고찰에서는 총점만으로 부상을 예측하는 근거가 제한적이었다(Moran et al., 2017). 이 연구는 부상 발생을 추적하지 않았으므로, FMS 점수의 향상을 부상 예방이나 경기력 향상으로 직접 연결하여 해석하는 데에는 신중해야 한다.",
+  "실험군의 FMS 총점은 【변화량】점 【증가/감소】하였다. 사전 총점(【 】점)은 대학 선수의 평균으로 보고된 14.8점(Pollen et al., 2021)과 비교할 때 【 】 수준이었다. 선수 대상 운동중재 연구를 종합한 메타분석에서 기능성 훈련은 1.74점, 코어 안정성 훈련은 2.89점의 FMS 총점 향상을 보였으며(Maleki et al., 2025), 이 연구의 변화량은 【이 범위와 비교하여 기재】. 태권도 전공자에게 12주간 HIIT를 적용한 김현륜과 이상일(2026)도 FMS의 향상을 보고하였다. 또한 FMS 총점의 최소탐지변화량은 평가자 간 2.1점, 평가자 내 2.5점으로 보고되어(Teyhen et al., 2012), 집단 평균의 변화를 개별 선수의 의미 있는 변화로 해석할 때에는 측정오차를 함께 고려해야 한다.",
+  "하위항목에서는 【유의하게 변화한 항목】이 【향상】되었다. H-IFIT에는 하지의 가동성과 안정성, 한 발 지지 균형을 요구하는 스쿼트 점프, 점핑 런지, 스텝업(Deep Squat, Hurdle Step, In-line Lunge와 관련)과 몸통 안정화·회전 동작인 플랭크, 사이드 플랭크, 밴드 회전(Trunk Stability Push-up, Rotary Stability와 관련)이 포함되었으나, 어깨와 햄스트링의 유연성(Shoulder Mobility, Active Straight Leg Raise)을 직접 겨냥한 운동은 포함되지 않았다. 【재분석에서 변화한 항목과 이 프로그램 구성의 대응 관계를 비교하여 해석 기재】. 김현륜과 이상일(2026)은 7개 하위항목 모두에서 유의한 변화를 보고하였는데, 이 연구 결과와는 【일치 여부와 그 이유(프로그램 구성, 대상자 특성 등) 기재】.",
+  "FMS 총점 14점 이하가 부상 위험 증가와 관련된다는 보고가 있으나(Kiesel et al., 2007), 체계적 문헌고찰에서는 총점만으로 부상을 예측하는 근거가 제한적이었다(Moran et al., 2017). 이 연구는 부상 발생을 추적하지 않았으므로, FMS 점수의 변화를 부상 예방이나 경기력 향상으로 직접 연결하여 해석하는 데에는 신중해야 한다.",
   "이 연구의 제한점은 다음과 같다. 첫째, 대상자 수가 적고 【무작위 배정을 하지 않아】 결과를 일반화하는 데 한계가 있다. 둘째, 두 집단의 총 훈련량을 동일하게 통제하지 못하였다【확인】. 셋째, 【FMS 평가자의 눈가림 또는 신뢰도에 관한 제한점】. 넷째, 중재 종료 후 효과의 지속성과 실제 경기력 및 부상 발생과의 관련성을 확인하지 못하였다. 후속 연구에서는 훈련량을 통제한 무작위 대조 설계와 추적 관찰을 통해 이를 보완할 필요가 있다.",
 ];
 const CONC = [
-  "이 연구에서 12주간의 H-IFIT에 참여한 대학 태권도 겨루기 선수는 정규훈련 집단에 비해 VO~2~max와 FMS 총점에서 더 큰 향상을 보였다. 특히 FMS 하위항목 중 Deep Squat, Hurdle Step, In-line Lunge, Rotary Stability가 향상되어, 기능적 동작을 인터벌 구조로 구성한 훈련이 유산소성 체력과 하지·몸통 중심의 기본 움직임 수행을 함께 개선할 수 있음을 시사하였다.",
-  "따라서 대학 겨루기 선수의 체력 훈련에 H-IFIT를 포함하는 것을 고려할 수 있으며, 어깨와 고관절의 가동성을 보완하는 운동을 함께 구성하는 것이 바람직하다. 후속 연구에서는 훈련량을 통제한 무작위 대조 설계로 효과를 검증하고, 경기력 및 부상 발생과의 관련성을 확인할 필요가 있다.",
+  "【재분석 결과에 맞춰 기재. 예: 이 연구에서 12주간의 H-IFIT에 참여한 대학 태권도 겨루기 선수는 정규훈련 집단에 비해 VO~2~max와 FMS 총점에서 더 큰 향상을 보였으며, FMS 하위항목 중 ○○가 향상되었다.】",
+  "【결과에 따른 현장 적용 제언 기재】. 후속 연구에서는 훈련량을 통제한 무작위 대조 설계로 효과를 검증하고, 경기력 및 부상 발생과의 관련성을 확인할 필요가 있다.",
 ];
 
 const REFS = [
@@ -235,23 +235,23 @@ const T3 = table({
   size: 8,
   header: ["변인", "집단", "사전", "사후", "*t* (*p*)", "*F* (*p*)"],
   rows: [
-    ["VO~2~max\n(mL/kg/min)", "실험군", "48.31±4.12", "52.38±4.05", "−6.184\n(<.001)", "18.742\n(<.001)"],
-    ["", "통제군", "【 】", "【 】", "−1.207\n(.253)", ""],
-    ["FMS 총점\n(점)", "실험군", "14.92±1.44^b^", "17.08±1.32^b^", "−7.368^b^\n(<.001)", "21.396\n(<.001)"],
-    ["", "통제군", "【 】", "【 】", "−1.483\n(.166)", ""],
+    ["VO~2~max\n(mL/kg/min)", "실험군", "【 】", "【 】", "【 】", "【 】"],
+    ["", "통제군", "【 】", "【 】", "【 】", ""],
+    ["FMS 총점\n(점)", "실험군", "【 】", "【 】", "【 】", "【 】"],
+    ["", "통제군", "【 】", "【 】", "【 】", ""],
   ],
 });
 const T4 = table({
   widths: [1240, 840, 840, 840, 840],
   header: ["항목", "실험군 사전", "실험군 사후", "통제군 사전", "통제군 사후"],
   rows: [
-    ["Deep Squat^a^", "【 】", "【 】", "【 】", "【 】"],
-    ["Hurdle Step^a^", "【 】", "【 】", "【 】", "【 】"],
-    ["In-line Lunge^a^", "【 】", "【 】", "【 】", "【 】"],
+    ["Deep Squat", "【 】", "【 】", "【 】", "【 】"],
+    ["Hurdle Step", "【 】", "【 】", "【 】", "【 】"],
+    ["In-line Lunge", "【 】", "【 】", "【 】", "【 】"],
     ["Shoulder Mobility", "【 】", "【 】", "【 】", "【 】"],
     ["Active Straight Leg Raise", "【 】", "【 】", "【 】", "【 】"],
     ["Trunk Stability Push-up", "【 】", "【 】", "【 】", "【 】"],
-    ["Rotary Stability^a^", "【 】", "【 】", "【 】", "【 】"],
+    ["Rotary Stability", "【 】", "【 】", "【 】", "【 】"],
   ],
   size: 8,
 });
@@ -290,7 +290,7 @@ const firstSection = {
       border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: "000000", space: 6 } },
     }),
     new Paragraph({ children: runs("* 교신저자: 【국문 성명】(Ki-Seung Ham), 【소속】, 【이메일】", { size: 8 }), spacing: { line: LS(130) } }),
-    new Paragraph({ children: runs("이 논문은 【연도】년 8월 국기원 국제학술대회(【공식 행사명】)에서 포스터로 발표한 내용을 확장한 것임. 【연구비 지원 기관·과제번호(해당 시)】", { size: 8 }), spacing: { line: LS(130), after: 200 } }),
+    new Paragraph({ children: runs("이 논문은 【연도】년 8월 국기원 국제학술대회(【공식 행사명】)에서 포스터로 발표한 연구의 자료를 재분석하여 작성한 것임. 【연구비 지원 기관·과제번호(해당 시)】", { size: 8 }), spacing: { line: LS(130), after: 200 } }),
   ],
 };
 
@@ -310,10 +310,10 @@ const bodyChildren = [
   h2("1. 최대산소섭취량"), body(R1),
   h2("2. FMS 총점"), body(R2),
   tcap("표 3. 집단별 최대산소섭취량과 FMS 총점의 변화"), T3,
-  tnote("값은 평균±표준편차. *t*, 집단별 대응표본 *t*검정(사전−사후); *F*, 집단×시기 상호작용(자유도 1, 【23】). ^b^【원자료로 재산출한 뒤 확정】"),
+  tnote("값은 평균±표준편차. *t*, 집단별 대응표본 *t*검정(사전−사후); *F*, 집단×시기 상호작용(자유도 1, 【df】)."),
   h2("3. FMS 하위항목"), body(R3),
   tcap("표 4. 집단별 FMS 하위항목 점수의 변화"), T4,
-  tnote("값은 평균±표준편차(점). ^a^실험군 사전·사후 *p* < .05. 【검정 방법 기재】."),
+  tnote("값은 평균±표준편차(점). 【유의한 항목 표시 기호와 검정 방법 기재】."),
   h1("Ⅳ. 논의"), ...DISC.map(body),
   h1("Ⅴ. 결론"), ...CONC.map(body),
   blank(80),
