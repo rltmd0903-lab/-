@@ -131,10 +131,10 @@ for r in [EX] + list(range(FIRST, LAST + 1)):
         cell.font = F(italic=ex, color="7F7F7F" if ex else "000000")
         cell.alignment = Alignment(horizontal="left" if col == CHK else "center", vertical="center")
 # 예시 행 (집단을 비워 분석에서 제외)
-ex_vals = {"A": "예시", ("VO2", "pre"): 48.30, ("VO2", "post"): 52.40, ("FMS", "pre"): 14, ("FMS", "post"): 16,
+ex_vals = {"A": "예시", ("VO2", "pre"): 45.00, ("VO2", "post"): 47.50, ("FMS", "pre"): 13, ("FMS", "post"): 15,
            ("DS", "pre"): 2, ("DS", "post"): 3, ("HS", "pre"): 2, ("HS", "post"): 2, ("ILL", "pre"): 2,
            ("ILL", "post"): 3, ("SM", "pre"): 2, ("SM", "post"): 2, ("ASLR", "pre"): 2, ("ASLR", "post"): 2,
-           ("TSPU", "pre"): 2, ("TSPU", "post"): 2, ("RS", "pre"): 2, ("RS", "post"): 2}
+           ("TSPU", "pre"): 2, ("TSPU", "post"): 2, ("RS", "pre"): 1, ("RS", "post"): 1}
 for k, v in ex_vals.items():
     wi[f"{k}{EX}" if k == "A" else f"{COL[k]}{EX}"] = v
 wi[f"B{EX}"] = "(예시)"
