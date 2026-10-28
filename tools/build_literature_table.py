@@ -150,7 +150,7 @@ ws.column_dimensions["B"].width = 110
 ws = wb.create_sheet("VO2max_중재")
 title(ws, "VO2max 중재연구 사전/사후 (mL/kg/min)", "같은 행의 사전·사후는 같은 집단의 평균±표준편차입니다. 변화율만 보고된 연구는 '보고된 변화·결과' 열에 적었습니다.")
 VO2_ROWS = [
-    ("Batra & Zatoń (2016), J Combat Sports Martial Arts", "ITF 태권도 수련자(남)", 20, "8주, 주 2회 인터벌(돌려차기 30초/휴식 90초) 추가",
+    ("Batra & Zatoń (2016), J Combat Sports Martial Arts", "ITF 태권도 수련자(남)", 20, "8주, 정규 수련(주 3회)에 주 2회 인터벌 추가",
      "트레드밀 점증부하, 직접측정", "실험군", 50.13, 3.81, 53.16, NA, "유의하게 증가(p ≤ .05)", "이 연구와 프로토콜 가장 유사. 사후 SD 원문 확인", "batra"),
     ("Batra & Zatoń (2016)", "ITF 태권도 수련자(남)", NA, "정규 수련", "트레드밀 점증부하, 직접측정", "통제군", NA, NA, NA, NA,
      "유의한 변화 없음", "통제군 수치 원문 확인", "batra"),
@@ -162,8 +162,8 @@ VO2_ROWS = [
      "+4.84%. 1:4 비율 집단만 통제군 대비 유의", "집단별 절대값 원문 확인", "wr2019"),
     ("Monks 외 (2017), J Sports Med Phys Fitness", "대학 태권도 선수(남녀)", 33, "4주 11회, HIIT(16명) vs 고강도 지속달리기(17명)",
      "VO2max", "HIIT", NA, NA, NA, NA, "두 집단 모두 향상(초록 판본 간 서술 차이 있음)", "수치 원문 확인", "monks"),
-    ("Song & Sheykhlouvand (2024), J Sports Sci Med", "태권도 선수", NA, "약 8주 16회, 기술 특이 인터벌 vs 짧은 질주 인터벌 vs 통제",
-     "VO2max, 심박출량 등", "HIIT", NA, NA, NA, NA, "두 HIIT 모두 향상, 기술 특이 인터벌이 더 큼", "수치·표본 수 원문 확인", "song"),
+    ("Song & Sheykhlouvand (2024), J Sports Sci Med", "훈련된 태권도 선수", NA, "정규훈련(주 3회, 60분) 후 반복 질주(3×10×4초) 또는 반복 발차기 인터벌 추가. 기간 원문 확인",
+     "VO2max, 심박출량 등", "HIIT", NA, NA, NA, NA, "두 HIIT 모두 향상, 반복 질주 인터벌(HIITRS)이 더 크고 고른 적응", "수치·표본 수·기간 원문 확인", "song"),
     ("인도네시아 겨루기 HIIT", "겨루기 선수", 6, "HIIT, 단일군", "셔틀런(MFT) 추정", "실험군", 27.26, NA, 30.43, NA,
      "유의하게 증가", "현장검사 추정치라 직접 비교 제외", "indo", "excl"),
 ]
