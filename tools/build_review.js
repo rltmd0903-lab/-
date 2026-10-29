@@ -38,7 +38,10 @@ let tableRows = [];
 const flushTable = () => {
   if (!tableRows.length) return;
   const rows = tableRows.filter((r) => !/^\|\s*-/.test(r)).map((r) => r.replace(/^\||\|$/g, "").split("|").map((c) => c.trim()));
-  const widths = [600, 1500, 4338, 3200];
+  // 열 너비: 열마다 가장 긴 칸의 글자 수에 비례(긴 문장 열은 60자로 상한)
+  const lens = rows[0].map((_, ci) => Math.min(60, Math.max(...rows.map((r) => (r[ci] || "").replace(/\*\*/g, "").length))) + 4);
+  const sum = lens.reduce((a, b) => a + b, 0);
+  const widths = lens.map((l) => Math.floor((W * l) / sum));
   children.push(new Table({
     width: { size: W, type: WidthType.DXA }, columnWidths: widths,
     rows: rows.map((cells, ri) => new TableRow({
