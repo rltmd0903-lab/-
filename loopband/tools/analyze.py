@@ -1,6 +1,6 @@
 """루프밴드 연구 원자료 → 원고 표와 자료 점검 결과.
 
-사용: python3 analyze.py <원자료.xlsx> <결과.xlsx>
+사용: python3 analyze.py <원자료_입력양식_SPSS.xlsx 또는 .sav> <결과.xlsx>
 
 계산 방식(SPSS 25 기본값과 같게 맞춤)
 - 사전 동질성: 독립표본 t(Levene p<.05이면 Welch)
@@ -17,7 +17,6 @@ from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
 SRC, OUT = sys.argv[1], sys.argv[2]
-HDR_ROW, FIRST = 3, 5
 VARS = [  # (열 접두어, 원고 표기, 단위, 값이 클수록 좋은가, 정수 기록 항목인가, 허용 범위)
     ("KFES", "낙상효능감(KFES-I)", "점", False, True, (16, 64)),
     ("의자일어서기", "의자 일어서기", "회", True, True, (0, 40)),
@@ -41,19 +40,68 @@ def msd(x):
 
 
 # ------------------------------------------------------------------ 읽기
-ws = load_workbook(SRC, data_only=True)["원자료"]
-heads = [c.value for c in ws[HDR_ROW]]
-rows = []
-for r in ws.iter_rows(min_row=FIRST, values_only=True):
-    if all(v in (None, "") for v in r):
-        continue
-    rows.append(dict(zip(heads, r)))
-if not rows:
-    sys.exit("원자료 시트에 입력된 행이 없습니다.")
-
-
+# 입력 양식(원자료_입력양식_SPSS.xlsx의 data 시트) 또는 SPSS .sav. 변수명은 build_spss_template.py 기준
 def num(v):
-    return None if v in (None, "") else float(v)
+    if v is None or v == "" or (isinstance(v, float) and math.isnan(v)):
+        return None
+    return float(v)
+
+
+if SRC.lower().endswith(".sav"):
+    import pyreadstat
+    df, _ = pyreadstat.read_sav(SRC)
+    raw = df.to_dict("records")
+else:
+    ws = load_workbook(SRC, data_only=True)["data"]
+    heads = [c.value for c in ws[1]]
+    raw = [dict(zip(heads, r)) for r in ws.iter_rows(min_row=2, values_only=True)]
+raw = [r for r in raw if num(r.get("id")) is not None]
+if not raw:
+    sys.exit("data 시트에 입력된 행이 없습니다.")
+
+GROUP = {1: "실험", 2: "통제"}
+RSN = {1: "출석 미달", 2: "건강상 이유", 3: "사후검사 불참", 4: "참여 철회", 5: "기타"}
+WHEN = {1: "사전검사 후 중재 시작 전", 2: "중재 중", 3: "사후검사 전"}
+kfes_partial = []
+
+
+def best(r, stem, t, fn):
+    v = [num(r.get(f"{stem}{k}_{t}")) for k in (1, 2)]
+    v = [x for x in v if x is not None]
+    return fn(v) if v else None
+
+
+rows = []
+for r in raw:
+    code = lambda k: None if num(r.get(k)) is None else int(num(r.get(k)))
+    d = {"ID": code("id"), "집단": GROUP.get(code("group")), "최종분석포함": "예" if code("incl") == 1 else "아니오",
+         "제외사유": RSN.get(code("excl_rsn")) if code("excl_rsn") else None, "제외시점": WHEN.get(code("excl_when")),
+         "출석횟수": r.get("attend"), "나이": r.get("age"), "신장": r.get("height"), "체중": r.get("weight")}
+    if r.get("excl_txt"):
+        d["제외사유"] = f"{d['제외사유'] or '사유 코드 없음'}({r['excl_txt']})"
+    for t, tk in (("pre", "사전"), ("post", "사후")):
+        items = [num(r.get(f"kfes{i:02d}_{t}")) for i in range(1, 17)]
+        k = sum(x is not None for x in items)
+        d[f"KFES_{tk}"] = sum(items) if k == 16 else None
+        if 0 < k < 16:
+            kfes_partial.append((d["ID"], tk, k))
+        d[f"의자일어서기_{tk}"] = r.get(f"chair_{t}")
+        d[f"팔굽히기_{tk}"] = r.get(f"curl_{t}")
+        d[f"2분제자리걷기_{tk}"] = r.get(f"step_{t}")
+        d[f"등뒤로손잡기_{tk}"] = best(r, "bs", t, max)
+        d[f"앉아윗몸앞으로굽히기_{tk}"] = best(r, "sr", t, max)
+        d[f"2.44m갔다오기_{tk}"] = best(r, "tug", t, min)
+    rows.append(d)
+
+
+def cronbach(t):
+    m = np.array([[num(r.get(f"kfes{i:02d}_{t}")) for i in range(1, 17)] for r in raw
+                  if num(r.get("incl")) == 1], dtype=float)
+    m = m[~np.isnan(m).any(axis=1)]
+    if len(m) < 3:
+        return float("nan"), len(m)
+    k = m.shape[1]
+    return k / (k - 1) * (1 - m.var(axis=0, ddof=1).sum() / m.sum(axis=1).var(ddof=1)), len(m)
 
 
 all_rows = rows
@@ -260,7 +308,12 @@ for r in final:
 for ids in dup.values():
     if len(ids) > 1:
         chk.append(["모든 측정값이 같은 대상자", "-", "-", ", ".join(map(str, ids)), "중복 입력 여부 확인"])
+for i, tk, k in kfes_partial:
+    chk.append(["KFES 문항 일부 결측", "낙상효능감(KFES-I)", tk, f"ID {i}: 16문항 중 {k}문항", "총점을 계산하지 않음(결측). 설문지 확인"])
 out_rows["자료점검"] = chk
+out_rows["신뢰도"] = [["척도", "Cronbach α", "사용 인원"]] + [
+    [f"KFES-I {tk}", f"{a:.3f}" if not math.isnan(a) else "-", n] for t, tk in (("pre", "사전"), ("post", "사후"))
+    for a, n in [cronbach(t)]]
 
 # ------------------------------------------------------------------ 쓰기
 FONT = "맑은 고딕"
