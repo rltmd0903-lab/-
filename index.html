@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>현대인과 무도 OX 퀴즈</title>
+<style>
+  :root{
+    --bg:#f4f5f7;
+    --card:#ffffff;
+    --text:#1b2230;
+    --muted:#4d5666;
+    --line:#d6dae1;
+    --primary:#2a49c9;
+    --primary-ink:#ffffff;
+    --primary-soft:#e8ecfc;
+    --ok:#126b41;
+    --ok-soft:#e3f4ea;
+    --ng:#b42b24;
+    --ng-soft:#fcebea;
+    --note-soft:#fff6db;
+    --note-line:#e0bc4f;
+    --focus:#e09b00;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#13161c;
+      --card:#1d222a;
+      --text:#eef1f6;
+      --muted:#b3bbc9;
+      --line:#38404c;
+      --primary:#8aa0ff;
+      --primary-ink:#0e1220;
+      --primary-soft:#252e4c;
+      --ok:#62d69a;
+      --ok-soft:#16322a;
+      --ng:#ff8f86;
+      --ng-soft:#3b201f;
+      --note-soft:#332b14;
+      --note-line:#8a7432;
+      --focus:#ffc94d;
+    }
+  }
+
+  *{box-sizing:border-box}
+  [hidden]{display:none !important}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕","Noto Sans KR",system-ui,sans-serif;
+    font-size:18px;
+    line-height:1.65;
+    word-break:keep-all;
+    overflow-wrap:anywhere;
+  }
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:16px 16px calc(32px + env(safe-area-inset-bottom));
+  }
+  a{color:var(--primary)}
+
+  /* 상단 */
+  .top h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
+  .top .sub{color:var(--muted);font-weight:700;margin:0 0 14px}
+  .progress{margin:0 0 14px}
+  .progress-text{font-weight:700;color:var(--muted);margin-bottom:6px}
+  .bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+  .bar-fill{height:100%;width:0;background:var(--primary);transition:width .25s ease}
+
+  /* 화면 전환 */
+  .screen{display:none}
+  .screen.active{display:block}
+
+  /* 공통 */
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:20px 18px;
+    margin:0 0 16px;
+  }
+  h2{font-size:21px;line-height:1.45;margin:0 0 14px}
+  h2:focus{outline:none}
+  h3{font-size:19px;line-height:1.45;margin:0 0 8px}
+  p{margin:0 0 12px}
+  .muted{color:var(--muted)}
+
+  .steps{margin:0 0 16px;padding-left:1.4em}
+  .steps li{margin-bottom:8px}
+  .meta{list-style:none;margin:0;padding:14px 16px;border-radius:10px;background:var(--primary-soft)}
+  .meta li{margin:2px 0}
+
+  /* 버튼 */
+  .btn{
+    display:block;
+    width:100%;
+    min-height:52px;
+    padding:12px 16px;
+    font:inherit;
+    font-size:19px;
+    font-weight:700;
+    line-height:1.4;
+    border-radius:12px;
+    border:2px solid var(--primary);
+    background:var(--primary);
+    color:var(--primary-ink);
+    cursor:pointer;
+    -webkit-appearance:none;
+    appearance:none;
+  }
+  .btn.secondary{background:transparent;color:var(--primary)}
+  .btn + .btn{margin-top:12px}
+  .btn:active{filter:brightness(.92)}
+  .btn:focus-visible,
+  .ox:focus-visible,
+  textarea:focus-visible,
+  a:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+  /* 문항 */
+  .area{
+    display:inline-block;
+    margin:0 0 10px;
+    padding:2px 12px;
+    border-radius:99px;
+    background:var(--primary-soft);
+    color:var(--primary);
+    font-weight:800;
+  }
+  .qtext{font-size:20px;font-weight:700;line-height:1.55;margin:0 0 18px}
+
+  .oxrow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .ox{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    min-height:112px;
+    padding:12px 8px;
+    font:inherit;
+    font-size:18px;
+    color:var(--text);
+    background:var(--card);
+    border:3px solid var(--line);
+    border-radius:16px;
+    cursor:pointer;
+    -webkit-appearance:none;
+    appearance:none;
+  }
+  .ox .sym{font-size:44px;font-weight:900;line-height:1.1}
+  .ox .lbl{font-weight:800}
+  .ox .tag{font-weight:800;text-align:center;line-height:1.4}
+  .ox .tag:empty{display:none}
+  .ox:not(.locked):active{background:var(--primary-soft);border-color:var(--primary)}
+  @media (hover:hover){
+    .ox:not(.locked):hover{border-color:var(--primary)}
+  }
+  .ox.locked{cursor:default}
+  .ox.rest{color:var(--muted)}
+  .ox.correct{border-color:var(--ok);background:var(--ok-soft)}
+  .ox.correct .tag,.ox.correct .sym{color:var(--ok)}
+  .ox.wrong{border-color:var(--ng);background:var(--ng-soft)}
+  .ox.wrong .tag,.ox.wrong .sym{color:var(--ng)}
+
+  /* 즉시 피드백 */
+  .fb{margin-top:16px;padding:16px;border-radius:12px;border:2px solid var(--line)}
+  .fb:empty{display:none}
+  .fb:focus{outline:none}
+  .fb.ok{border-color:var(--ok);background:var(--ok-soft)}
+  .fb.ng{border-color:var(--ng);background:var(--ng-soft)}
+  .fb .head{font-size:20px;font-weight:800;margin:0 0 8px}
+  .fb.ok .head{color:var(--ok)}
+  .fb.ng .head{color:var(--ng)}
+  .label{font-weight:800;margin:0 0 2px}
+  .src{color:var(--muted);margin:10px 0 0}
+  .fb p:last-child{margin-bottom:0}
+
+  /* 결과 */
+  .score{text-align:center;padding:4px 0 12px}
+  .score-num{font-size:40px;font-weight:800;line-height:1.2}
+  .score-sub{color:var(--muted);font-weight:700}
+  .wrongnums{
+    margin:0 0 14px;
+    padding:12px 14px;
+    border-radius:10px;
+    background:var(--bg);
+    font-weight:700;
+  }
+  .chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0}
+  .chips li{padding:6px 12px;border-radius:99px;border:2px solid;font-weight:700}
+  .chips li.ok{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+  .chips li.ng{border-color:var(--ng);color:var(--ng);background:var(--ng-soft)}
+
+  .rv + .rv{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+  .rv-q{font-weight:700}
+  .rv-row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    padding:10px 12px;
+    margin:0 0 8px;
+    border-radius:10px;
+    border:2px solid;
+    font-weight:700;
+  }
+  .rv-row.ng{border-color:var(--ng);background:var(--ng-soft);color:var(--ng)}
+  .rv-row.ok{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
+  .rv-ex{padding:12px 14px;border-radius:10px;background:var(--bg)}
+  .rv-ex p:last-child{margin-bottom:0}
+
+  /* 개념 정리 */
+  .term{padding:14px 0;border-top:1px solid var(--line)}
+  .term:first-of-type{border-top:0;padding-top:0}
+  .term h3{margin-bottom:4px}
+  .term p{margin:0 0 4px}
+  .term .eg{color:var(--muted)}
+
+  .note{
+    margin:0 0 16px;
+    padding:14px 16px;
+    border-radius:12px;
+    border:1px solid var(--note-line);
+    background:var(--note-soft);
+    font-weight:700;
+  }
+
+  /* 입력 */
+  .qlabel{display:block;font-weight:700;margin:0 0 10px}
+  textarea{
+    display:block;
+    width:100%;
+    font:inherit;
+    font-size:18px;
+    line-height:1.6;
+    color:var(--text);
+    background:var(--card);
+    border:2px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+    resize:vertical;
+  }
+  textarea:focus{border-color:var(--primary)}
+  textarea::placeholder{color:var(--muted);opacity:1}
+  #tOut{background:var(--bg);min-height:220px}
+  .status{margin:12px 0 0;font-weight:700}
+  .status:empty{display:none}
+  .status.ok{color:var(--ok)}
+  .status.warn{color:var(--ng)}
+
+  @media (prefers-reduced-motion: reduce){
+    .bar-fill{transition:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <h1>현대인과 무도 OX 퀴즈</h1>
+    <p class="sub">태권도 · 유도 · 레슬링 · 복싱</p>
+    <div class="progress" id="progress" hidden>
+      <div class="progress-text" id="progressText">문항 1 / 10</div>
+      <div class="bar" aria-hidden="true"><div class="bar-fill" id="barFill"></div></div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 1. 시작 안내 -->
+    <section class="screen active" id="s-start" aria-labelledby="h-start">
+      <div class="card">
+        <h2 id="h-start" tabindex="-1">활동 안내</h2>
+        <ol class="steps">
+          <li>무도와 격투 종목에 관한 문장 10개가 나옵니다. 문장이 맞으면 <strong>O</strong>, 틀리면 <strong>X</strong>를 누르세요.</li>
+          <li>답을 고르면 바로 정답 여부와 해설, 근거 연구가 나옵니다. <strong>한 번 고른 답은 바꿀 수 없습니다.</strong></li>
+          <li>해설을 읽은 뒤 ‘다음’ 버튼을 눌러 넘어갑니다.</li>
+          <li>모두 풀면 점수와 틀린 문항의 해설을 다시 볼 수 있습니다.</li>
+          <li>마지막에 결과를 복사해 제출합니다.</li>
+        </ol>
+        <ul class="meta">
+          <li>소요 시간: 약 7분</li>
+          <li>구성: OX 10문항</li>
+          <li>이름·학번은 입력하지 않습니다.</li>
+          <li>입력한 내용은 외부로 전송되지 않습니다.</li>
+        </ul>
+      </div>
+      <button type="button" class="btn" id="btnStart">시작하기</button>
+    </section>
+
+    <!-- 2. 문항 풀이 -->
+    <section class="screen" id="s-quiz" aria-labelledby="qNum">
+      <div class="card">
+        <h2 id="qNum" tabindex="-1">문항 1</h2>
+        <span class="area" id="qArea"></span>
+        <p class="qtext" id="qText"></p>
+        <div class="oxrow" id="qOptions" role="group" aria-labelledby="qText"></div>
+        <div class="fb" id="qFeedback" tabindex="-1" aria-live="polite"></div>
+      </div>
+      <button type="button" class="btn" id="btnNext" hidden>다음</button>
+    </section>
+
+    <!-- 3. 결과 -->
+    <section class="screen" id="s-result" aria-labelledby="h-result">
+      <div class="card">
+        <h2 id="h-result" tabindex="-1">결과</h2>
+        <div class="score">
+          <div class="score-num" id="rScore">0 / 10</div>
+          <div class="score-sub" id="rScoreSub"></div>
+        </div>
+        <p class="wrongnums">틀린 문항: <span id="rWrongNums"></span></p>
+        <ul class="chips" id="rChips"></ul>
+      </div>
+      <div class="card">
+        <h2>틀린 문항 다시 보기</h2>
+        <div id="rReview"></div>
+      </div>
+      <div class="card">
+        <h2>개념 정리: 무술 · 무예 · 무도</h2>
+        <div class="term">
+          <h3>무술(武術)</h3>
+          <p>술(術): 상대를 제압하고 몸을 지키는 실전 기술 체계</p>
+          <p class="eg">핵심 질문: 어떻게 이기고 지키는가 · 예: 호신술, 군사 격투술</p>
+        </div>
+        <div class="term">
+          <h3>무예(武藝)</h3>
+          <p>예(藝): 단련된 기술의 숙련과 형식미, 전통문화로서의 무술</p>
+          <p class="eg">핵심 질문: 얼마나 숙련되고 아름다운가 · 예: 『무예도보통지』(1790)의 24기</p>
+        </div>
+        <div class="term">
+          <h3>무도(武道)</h3>
+          <p>도(道): 수련을 통한 인격 수양·예절·교육적 가치</p>
+          <p class="eg">핵심 질문: 수련으로 어떤 사람이 되는가 · 예: 유도, 검도, 태권도</p>
+        </div>
+        <div class="term">
+          <h3>격투 스포츠</h3>
+          <p>규칙과 합의로 정해진 경기</p>
+          <p class="eg">핵심 질문: 규칙 안에서 누가 이기는가 · 예: 복싱·레슬링, 태권도 겨루기·유도 경기</p>
+        </div>
+      </div>
+      <div class="note">결과를 제출하면 수업에서 함께 이야기합니다.</div>
+      <button type="button" class="btn" id="btnToCopy">다음: 결과 제출하기</button>
+    </section>
+
+    <!-- 4. 결과 복사 -->
+    <section class="screen" id="s-copy" aria-labelledby="h-copy">
+      <div class="card">
+        <h2 id="h-copy" tabindex="-1">결과 복사·제출</h2>
+        <label for="tWish" class="qlabel">다음 수업에서 더 알고 싶은 점 (선택)</label>
+        <textarea id="tWish" rows="4" maxlength="1000" placeholder="없으면 비워 두어도 됩니다."></textarea>
+      </div>
+      <div class="card">
+        <p>‘결과 복사’ 버튼을 누른 뒤 교수자가 안내한 제출 공간에 붙여 넣으세요.</p>
+        <button type="button" class="btn" id="btnCopy">결과 복사</button>
+        <p class="status" id="copyStatus" role="status" aria-live="polite"></p>
+      </div>
+      <div class="card">
+        <label for="tOut" class="qlabel">제출할 결과</label>
+        <p class="muted">복사가 되지 않으면 아래 글을 길게 눌러 전체 선택한 뒤 복사하세요.</p>
+        <textarea id="tOut" readonly rows="8"></textarea>
+      </div>
+      <div class="note">결과를 제출하면 수업에서 함께 이야기합니다.</div>
+      <button type="button" class="btn secondary" id="btnBackResult">결과 다시 보기</button>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var TITLE = '현대인과 무도 OX 퀴즈';
+  var STORE_KEY = 'mudo-ox-quiz-v1';
+
+  var QUESTIONS = [
+    {
+      area: '개념',
+      q: '학계에는 ‘무술(martial arts)’에 대해 하나로 합의된 정의가 확립되어 있다.',
+      answer: 'X',
+      explain: '무술의 정의는 학자마다 다르며 정의할 수 없다는 견해도 있다. 반면 격투 스포츠는 ‘규칙과 합의로 정해진 경기’로 비교적 분명하게 설명된다.',
+      src: 'Barreira 외 (2025), Frontiers in Psychology',
+      url: 'https://doi.org/10.3389/fpsyg.2025.1631471'
+    },
+    {
+      area: '태권도',
+      q: '태권도 수련은 정적 균형 능력(눈 감고 한 발 서기)을 높이는 데 효과가 있다.',
+      answer: 'O',
+      explain: '21편(972명) 메타분석에서 눈 감고 한 발 서기가 효과크기 0.86으로 유의하게 좋아졌다. 12주, 주 1회 60~70분 프로그램의 효과가 가장 컸다. 단, 연구 간 차이가 커서(I² 87%) 해석에 주의한다.',
+      src: 'Han & Ju (2025), PLOS ONE',
+      url: 'https://doi.org/10.1371/journal.pone.0317844'
+    },
+    {
+      area: '태권도',
+      q: '2024 파리 패럴림픽에서 부상 발생률이 가장 높았던 종목은 태권도였다.',
+      answer: 'O',
+      explain: '선수 4,450명 조사에서 전체 부상 발생률은 선수 1,000일당 8.6건이었고, 태권도는 27.3건으로 가장 높았다. 부상으로 잃은 훈련·경기 일수도 태권도가 가장 많았다.',
+      src: 'Derman 외 (2026), British Journal of Sports Medicine',
+      url: 'https://bjsm.bmj.com/content/60/14/1036'
+    },
+    {
+      area: '유도',
+      q: '유도 수련이 어린이·청소년의 체력과 협응력 발달에 도움이 된다는 연구 결과가 많다.',
+      answer: 'O',
+      explain: '22편(2,123명, 5~15세) 체계적 문헌고찰에서 유도 그룹이 근력·지구력·유연성·협응력 검사에서 대체로 더 좋았다. 단, 21편이 관찰 연구이고 RCT는 1편뿐이라 인과관계로 단정하기는 어렵다.',
+      src: 'Kowalczyk 외 (2025), Journal of Clinical Medicine',
+      url: 'https://doi.org/10.3390/jcm14072439'
+    },
+    {
+      area: '유도',
+      q: '유도를 하는 어린이의 균형 능력이 더 좋다는 결과는 모든 연구에서 일관되게 나타났다.',
+      answer: 'X',
+      explain: '같은 고찰에서 5편은 유도 그룹의 균형이 더 좋았지만 여러 연구는 차이가 없었다. 효과는 3~4년 이상 장기 수련에서 더 분명했다.',
+      src: 'Kowalczyk 외 (2025), Journal of Clinical Medicine',
+      url: 'https://doi.org/10.3390/jcm14072439'
+    },
+    {
+      area: '레슬링',
+      q: '경기 전 감량하는 레슬링 선수들은 땀복 달리기·사우나 같은 탈수 방법을 흔히 쓴다.',
+      answer: 'O',
+      explain: '감량 경험이 있는 레슬링 선수 350명 조사에서 땀복(우비) 달리기는 89.1%, 사우나는 79.7%가 써 본 적이 있다고 답했다.',
+      src: 'Seker 외 (2024), Frontiers in Nutrition',
+      url: 'https://doi.org/10.3389/fnut.2024.1505759'
+    },
+    {
+      area: '레슬링',
+      q: '급속 감량은 몸 상태에 거의 영향이 없어 선수들이 부작용을 거의 보고하지 않는다.',
+      answer: 'X',
+      explain: '같은 조사에서 극심한 피로 81.7%, 스트레스 79.7%, 경기력 저하 78.6%, 근육 경련 72.9%를 보고했다. 17세·20세 이하 선수가 성인보다 부작용을 더 많이 보고해, 연구진은 어린 선수의 경기 전 감량을 막아야 한다고 결론지었다.',
+      src: 'Seker 외 (2024), Frontiers in Nutrition',
+      url: 'https://doi.org/10.3389/fnut.2024.1505759'
+    },
+    {
+      area: '복싱',
+      q: '복싱 운동이 파킨슨병 노인의 균형과 삶의 질을 유의하게 개선한다는 사실이 메타분석으로 확립되었다.',
+      answer: 'X',
+      explain: '8편을 검토한 메타분석에서 균형 자신감·TUG·6분 걷기·삶의 질 모두 유의한 차이가 없었다. 합산된 연구가 3편뿐이라 ‘효과 없음’이 아니라 ‘근거가 아직 부족함’으로 이해해야 한다.',
+      src: 'Hernandez-Martinez 외 (2025), Frontiers in Public Health',
+      url: 'https://doi.org/10.3389/fpubh.2025.1589512'
+    },
+    {
+      area: '공통',
+      q: '성인 무술·격투 스포츠 수련자는 지각 능력과 억제 능력(충동을 참는 능력)이 더 좋은 경향이 일관되게 보고된다.',
+      answer: 'O',
+      explain: '성인 대상 72편 체계적 문헌고찰에서 지각·억제 능력과의 긍정적 관련은 일관되었다. 주의·기억과 정신건강 지표는 근거가 제한적이었다. 대부분 횡단 연구라 ‘수련 때문에 좋아졌다’고 단정할 수는 없다.',
+      src: 'Ciaccioni 외 (2024), Psychology of Sport and Exercise',
+      url: 'https://doi.org/10.1016/j.psychsport.2023.102556'
+    },
+    {
+      area: '공통',
+      q: '학생 대상 올림픽 격투 종목 수업은 심폐지구력(최대산소섭취량)을 유의하게 높였다.',
+      answer: 'X',
+      explain: '13편(1,314명, 7~23세) 메타분석에서 제자리멀리뛰기(효과크기 1.04)와 앉아 윗몸 앞으로 굽히기(0.80)는 좋아졌다. 최대산소섭취량(0.39)과 20m 왕복달리기(0.27)는 유의한 차이가 없었다.',
+      src: 'Hernandez-Martinez 외 (2025), Frontiers in Physiology',
+      url: 'https://doi.org/10.3389/fphys.2025.1620621'
+    }
+  ];
+
+  var CHOICES = [
+    { v: 'O', lbl: '맞다' },
+    { v: 'X', lbl: '틀리다' }
+  ];
+
+  var state = { screen: 's-start', current: 0, answers: [], wish: '' };
+  for (var a = 0; a < QUESTIONS.length; a++) state.answers.push(null);
+
+  var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  function $(id) { return document.getElementById(id); }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined && text !== null) e.textContent = text;
+    return e;
+  }
+
+  /* ---------- 새로고침 대비 저장(이 탭 안에서만) ---------- */
+  function save() {
+    try { window.sessionStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  function load() {
+    try {
+      var raw = window.sessionStorage.getItem(STORE_KEY);
+      if (!raw) return false;
+      var s = JSON.parse(raw);
+      if (!s || !s.answers || s.answers.length !== QUESTIONS.length) return false;
+      for (var i = 0; i < s.answers.length; i++) {
+        if (s.answers[i] !== null && s.answers[i] !== 'O' && s.answers[i] !== 'X') return false;
+      }
+      var cur = parseInt(s.current, 10);
+      if (isNaN(cur) || cur < 0 || cur >= QUESTIONS.length) return false;
+      if (['s-start', 's-quiz', 's-result', 's-copy'].indexOf(s.screen) < 0) return false;
+      if (s.screen === 's-result' || s.screen === 's-copy') {
+        for (var j = 0; j < s.answers.length; j++) if (s.answers[j] === null) return false;
+      }
+      state.screen = s.screen;
+      state.current = cur;
+      state.answers = s.answers;
+      state.wish = typeof s.wish === 'string' ? s.wish : '';
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function focusQuiet(node) {
+    if (!node) return;
+    try { node.focus({ preventScroll: true }); } catch (e) { node.focus(); }
+  }
+
+  function showScreen(id, focusId) {
+    var screens = document.querySelectorAll('.screen');
+    for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+    $(id).classList.add('active');
+    $('progress').hidden = (id !== 's-quiz');
+    state.screen = id;
+    save();
+    window.scrollTo(0, 0);
+    if (focusId) focusQuiet($(focusId));
+  }
+
+  function srcNode(q) {
+    var p = el('p', 'src');
+    p.appendChild(document.createTextNode('근거: '));
+    var a = el('a', null, q.src);
+    a.href = q.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    p.appendChild(a);
+    return p;
+  }
+
+  /* ---------- 문항 ---------- */
+  function renderQuestion() {
+    var q = QUESTIONS[state.current];
+    var total = QUESTIONS.length;
+
+    $('progressText').textContent = '문항 ' + (state.current + 1) + ' / ' + total;
+    $('barFill').style.width = ((state.current + 1) / total * 100) + '%';
+    $('qNum').textContent = '문항 ' + (state.current + 1);
+    $('qArea').textContent = q.area;
+    $('qText').textContent = q.q;
+
+    var box = $('qOptions');
+    box.innerHTML = '';
+    for (var i = 0; i < CHOICES.length; i++) {
+      (function (c) {
+        var b = el('button', 'ox');
+        b.type = 'button';
+        b.setAttribute('data-v', c.v);
+        b.setAttribute('aria-label', c.v + ', ' + c.lbl);
+        b.appendChild(el('span', 'sym', c.v));
+        b.appendChild(el('span', 'lbl', c.lbl));
+        b.appendChild(el('span', 'tag', ''));
+        b.addEventListener('click', function () { choose(c.v); });
+        box.appendChild(b);
+      })(CHOICES[i]);
+    }
+
+    var fb = $('qFeedback');
+    fb.className = 'fb';
+    fb.innerHTML = '';
+
+    var next = $('btnNext');
+    next.hidden = true;
+    next.textContent = (state.current < total - 1) ? '다음' : '다음 (결과 보기)';
+
+    if (state.answers[state.current] !== null) markAnswered(false);
+  }
+
+  function choose(v) {
+    if (state.answers[state.current] !== null) return; // 고른 답은 바꿀 수 없음
+    state.answers[state.current] = v;
+    save();
+    markAnswered(true);
+  }
+
+  function markAnswered(scroll) {
+    var q = QUESTIONS[state.current];
+    var mine = state.answers[state.current];
+    var isCorrect = (mine === q.answer);
+
+    var btns = $('qOptions').querySelectorAll('.ox');
+    for (var k = 0; k < btns.length; k++) {
+      var b = btns[k];
+      var v = b.getAttribute('data-v');
+      var tag = b.querySelector('.tag');
+      b.classList.add('locked');
+      b.setAttribute('aria-disabled', 'true');
+      if (v === q.answer && v === mine) {
+        b.classList.add('correct');
+        tag.textContent = '✓ 내 답 · 정답';
+      } else if (v === q.answer) {
+        b.classList.add('correct');
+        tag.textContent = '✓ 정답';
+      } else if (v === mine) {
+        b.classList.add('wrong');
+        tag.textContent = '✗ 내 답 · 오답';
+      } else {
+        b.classList.add('rest');
+      }
+    }
+
+    var fb = $('qFeedback');
+    fb.className = 'fb ' + (isCorrect ? 'ok' : 'ng');
+    fb.innerHTML = '';
+    fb.appendChild(el('p', 'head', isCorrect ? '✓ 정답입니다' : '✗ 오답입니다 · 정답은 ' + q.answer));
+    fb.appendChild(el('p', 'label', '해설'));
+    fb.appendChild(el('p', null, q.explain));
+    fb.appendChild(srcNode(q));
+
+    var next = $('btnNext');
+    next.hidden = false;
+    if (scroll) {
+      focusQuiet(fb);
+      try {
+        next.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'end' });
+      } catch (e) {
+        next.scrollIntoView(false);
+      }
+    }
+  }
+
+  function goNext() {
+    if (state.answers[state.current] === null) return;
+    if (state.current < QUESTIONS.length - 1) {
+      state.current++;
+      renderQuestion();
+      showScreen('s-quiz', 'qNum');
+    } else {
+      renderResult();
+      showScreen('s-result', 'h-result');
+    }
+  }
+
+  /* ---------- 결과 ---------- */
+  function tally() {
+    var score = 0, wrong = [];
+    for (var i = 0; i < QUESTIONS.length; i++) {
+      if (state.answers[i] === QUESTIONS[i].answer) score++;
+      else wrong.push(i);
+    }
+    return { score: score, wrong: wrong };
+  }
+
+  function wrongLabel(wrong) {
+    if (!wrong.length) return '없음';
+    var out = [];
+    for (var i = 0; i < wrong.length; i++) out.push((wrong[i] + 1) + '번');
+    return out.join(', ');
+  }
+
+  function renderResult() {
+    var t = tally();
+    var total = QUESTIONS.length;
+
+    $('rScore').textContent = t.score + ' / ' + total;
+    $('rScoreSub').textContent = total + '문항 중 ' + t.score + '문항 정답';
+    $('rWrongNums').textContent = wrongLabel(t.wrong);
+
+    var chips = $('rChips');
+    chips.innerHTML = '';
+    for (var i = 0; i < total; i++) {
+      var ok = state.answers[i] === QUESTIONS[i].answer;
+      chips.appendChild(el('li', ok ? 'ok' : 'ng', (i + 1) + '번 ' + (ok ? '✓ 정답' : '✗ 오답')));
+    }
+
+    var review = $('rReview');
+    review.innerHTML = '';
+    if (!t.wrong.length) {
+      review.appendChild(el('p', null, '모든 문항을 맞혔습니다.'));
+      return;
+    }
+    for (var w = 0; w < t.wrong.length; w++) {
+      var idx = t.wrong[w];
+      var q = QUESTIONS[idx];
+      var item = el('div', 'rv');
+      item.appendChild(el('h3', null, '문항 ' + (idx + 1) + ' · ' + q.area));
+      item.appendChild(el('p', 'rv-q', q.q));
+      item.appendChild(el('div', 'rv-row ng', '✗ 내 답: ' + state.answers[idx]));
+      item.appendChild(el('div', 'rv-row ok', '✓ 정답: ' + q.answer));
+      var ex = el('div', 'rv-ex');
+      ex.appendChild(el('p', 'label', '해설'));
+      ex.appendChild(el('p', null, q.explain));
+      ex.appendChild(srcNode(q));
+      item.appendChild(ex);
+      review.appendChild(item);
+    }
+  }
+
+  /* ---------- 결과 텍스트 ---------- */
+  function buildText() {
+    var t = tally();
+    var total = QUESTIONS.length;
+    var perItem = [];
+    for (var i = 0; i < total; i++) {
+      var ok = state.answers[i] === QUESTIONS[i].answer;
+      perItem.push((i + 1) + '번 ' + state.answers[i] + ' ' + (ok ? '정답' : '오답'));
+    }
+    var wish = $('tWish').value.trim();
+    return [
+      '활동 이름: ' + TITLE,
+      '점수: ' + t.score + '/' + total,
+      '문항별 내 답과 정답 여부: ' + perItem.join(' / '),
+      '틀린 문항 번호: ' + wrongLabel(t.wrong),
+      '다음 수업에서 더 알고 싶은 점: ' + (wish || '없음')
+    ].join('\n');
+  }
+
+  function autosize(ta) {
+    ta.style.height = 'auto';
+    ta.style.height = (ta.scrollHeight + 4) + 'px';
+  }
+
+  function refreshOut() {
+    var out = $('tOut');
+    out.value = buildText();
+    autosize(out);
+  }
+
+  /* ---------- 복사 ---------- */
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '-9999px';
+    ta.style.fontSize = '18px';
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      ok = document.execCommand('copy');
+    } catch (e) {
+      ok = false;
+    }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function copySucceeded() {
+    var s = $('copyStatus');
+    s.className = 'status ok';
+    s.textContent = '✓ 복사되었습니다. 제출 공간에 붙여 넣으세요.';
+  }
+
+  function copyFailed() {
+    var s = $('copyStatus');
+    s.className = 'status warn';
+    s.textContent = '자동 복사가 되지 않았습니다. 아래 ‘제출할 결과’ 글을 길게 눌러 전체 선택한 뒤 복사하세요.';
+    var out = $('tOut');
+    try {
+      out.focus();
+      out.setSelectionRange(0, out.value.length);
+    } catch (e) { /* 직접 선택 */ }
+  }
+
+  function copyResult() {
+    refreshOut();
+    var text = $('tOut').value;
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(copySucceeded, function () {
+        if (legacyCopy(text)) copySucceeded(); else copyFailed();
+      });
+    } else {
+      if (legacyCopy(text)) copySucceeded(); else copyFailed();
+    }
+  }
+
+  function openCopy() {
+    $('tWish').value = state.wish;
+    $('copyStatus').textContent = '';
+    $('copyStatus').className = 'status';
+    showScreen('s-copy', 'h-copy');
+    refreshOut();
+  }
+
+  /* ---------- 이벤트 ---------- */
+  $('btnStart').addEventListener('click', function () {
+    state.current = 0;
+    renderQuestion();
+    showScreen('s-quiz', 'qNum');
+  });
+  $('btnNext').addEventListener('click', goNext);
+  $('btnToCopy').addEventListener('click', openCopy);
+  $('btnBackResult').addEventListener('click', function () {
+    renderResult();
+    showScreen('s-result', 'h-result');
+  });
+  $('btnCopy').addEventListener('click', copyResult);
+  $('tWish').addEventListener('input', function () {
+    state.wish = this.value;
+    save();
+    refreshOut();
+    $('copyStatus').textContent = '';
+  });
+  $('tOut').addEventListener('focus', function () {
+    var ta = this;
+    setTimeout(function () {
+      try { ta.setSelectionRange(0, ta.value.length); } catch (e) {}
+    }, 0);
+  });
+
+  /* ---------- 새로고침 후 이어 하기 ---------- */
+  if (load()) {
+    if (state.screen === 's-quiz') {
+      renderQuestion();
+      showScreen('s-quiz');
+    } else if (state.screen === 's-result') {
+      renderResult();
+      showScreen('s-result');
+    } else if (state.screen === 's-copy') {
+      renderResult();
+      openCopy();
+    }
+  }
+})();
+</script>
+</body>
+</html>
